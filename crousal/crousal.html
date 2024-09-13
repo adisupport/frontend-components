@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Crousal</title>
+    <style>
+        .card{
+            display: inline-block;
+            height: 400px;
+            width: 450px;
+            border-radius: 10px;
+            background-color: cornflowerblue;
+        }
+        .card img{
+            width: 100%;
+            height: 100%;
+        }
+        .horizontal-scroll{
+            /* width: max-content; */
+            overflow: hidden;
+        }
+        .scrollable{
+            width: max-content;            
+            white-space: nowrap;
+            transition: 0.3s;
+            border: .5px solid blue;
+        }
+        .horizontal-scroll::-webkit-scrollbar {
+            display: none;
+        }
+        .crousal{
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+        }
+        .crousal button{
+            margin: 0 10px;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="crousal">
+        <div class="scrollable">
+                <div class="card">card 1 </div>
+                <div class="card"> card 2</div>
+                <div class="card"> card 3</div>
+                <div class="card"> card 4</div>
+                <div class="card">card 5</div>
+        </div>
+    </div>
+    <div class="crousal">
+            <div class="scrollable">
+                <div class="card">card 1 </div>
+                <div class="card"> card 2</div>
+                <div class="card"> card 3</div>
+                <div class="card"> card 4</div>
+                <div class="card">card 5</div>
+            </div>
+    </div>
+
+    <script>
+        let crousals = document.querySelectorAll('.crousal')
+        let scroll_amount = 0;
+        function createElementWithText(tagName,text){
+            let ele = document.createElement(tagName)
+            if(text != undefined)
+            ele.innerText = text
+            return ele
+        }
+        crousals.forEach((crousal)=>{
+            let leftButton = createElementWithText('button',"left")
+            let rightButton = createElementWithText('button',"right")
+            let buttons = crousal.getElementsByTagName('button')
+            let horiScroll = document.createElement('div');
+            let panel = crousal.querySelector('.scrollable')            
+            
+            
+            horiScroll.style.overflow='hidden';
+            
+            
+            horiScroll.appendChild(panel);
+            crousal.append(horiScroll)
+            crousal.prepend(leftButton)
+            crousal.append(rightButton)
+            
+            let scroll_amount = 1;
+            let card = panel.children
+            let card_width = card[0].scrollWidth;
+            buttons[1].onclick = ()=>{
+                console.log('left');
+                if(scroll_amount>-(card.length-1)){
+                    scroll_amount-=1
+                    panel.style.transform = `translate(${scroll_amount*card_width}px)`;
+                }
+            }
+            buttons[0].onclick = ()=>{
+                console.log('right');
+                
+                if(scroll_amount<0){
+                    scroll_amount+=1
+                    panel.style.transform = `translate(${scroll_amount*card_width}px)`;
+                }
+                
+            }
+        })
+    </script>
+</body>
+</html>

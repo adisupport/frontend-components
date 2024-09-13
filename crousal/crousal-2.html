@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .card{
+            height: 300px;
+            width: 300px;
+            border-radius: 50%;
+            background-color: red;
+        }
+        .crousal{
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="crousal">
+        <div class="card"></div>
+        <div class="card"></div>
+        <div class="card"></div>
+        <div class="card"></div>
+    </div>
+    <script>
+        let crousals = document.querySelectorAll('.crousal');
+        crousals.forEach((crousal)=>{
+            //Creating two buttons
+            let left_btn = createElement('button',{innerText:'<',style:{fontSize:"36px",border:'none'}})
+            let right_btn = createElement('button',{innerText:'>',style:{fontSize:"36px",border:'none'}})
+            
+            let scroll_window = createElement('div',{
+                style:
+                {
+                    overflow:'hidden',
+                }
+            });
+            let panel = createElement('div',{
+                style:
+                {
+                    display:"flex",
+                    width:"max-content",
+                    whiteSpace:"nowrap",
+                    transition: '0.2s',
+                }
+            });    
+            while(crousal.firstChild){
+                panel.append(crousal.firstChild);
+            }
+            scroll_window.appendChild(panel);
+            crousal.appendChild(scroll_window)
+            crousal.prepend(left_btn)
+            crousal.append(right_btn)
+
+            let scroll_amount = 0;
+            let card = panel.children
+            let card_width = card[0].scrollWidth;
+            right_btn.onclick =()=>{
+
+                if(scroll_amount>-(card.length-1)){
+                    scroll_amount-=1
+                    panel.style.transform = `translate(${scroll_amount*card_width}px)`;
+                }
+            }
+            left_btn.onclick = ()=>{
+                if(scroll_amount<0){
+                    scroll_amount+=1
+                    panel.style.transform = `translate(${scroll_amount*card_width}px)`;
+                }
+            }
+        })
+
+
+
+
+
+
+
+
+
+
+        function createElement(tag="span",config = {}){
+            let element = document.createElement(tag);
+            attributeMapping(element,config)            
+            return element;
+        }
+        function attributeMapping(obj,attributes){
+            Object.entries(attributes).forEach((pair)=>{
+                if(typeof pair[1] == 'object'){
+                    attributeMapping(obj[pair[0]],pair[1])
+                }else if(Array.isArray(pair[1])){
+                    pair[1].forEach((value)=>{
+                        obj.classList.add(value)
+                    })
+                }else{
+                    obj[pair[0]] = pair[1];
+                }
+            })
+        }
+    </script>
+</body>
+</html>

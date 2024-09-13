@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>On View Effect</title>
+    <style>
+        section{
+            background-color: black;
+            color: white;
+            height: 100vh;
+            font-size: 72px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+        }
+        .on-view{
+            transform: translate(-100vw) scale(0.1);
+            transition: .2s;
+        }
+        .on-view-effect{
+            color: yellow;
+            transform: translate(0) scale(1);
+        }
+    </style>
+</head>
+<body>
+    <section class="on-view">
+        Section 1
+    </section>
+    <section class="on-view">
+        Section 2
+    </section>
+    <section class="on-view">
+        Section 3
+    </section>
+    <script src="onView.js"></script>
+</body>
+</html>
